@@ -21,6 +21,7 @@ import oracle.jdbc.pool.OracleDataSource;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -39,7 +40,7 @@ public class yeucau extends JFrame {
 	private String mayc;
 	private String tinhtrang;
 	private int tinhtrangi;
-
+	private JFrame frame;
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +70,7 @@ public class yeucau extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(184, 72, 548, 305);
+		scrollPane.setBounds(184, 72, 548, 230);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -109,23 +110,27 @@ public class yeucau extends JFrame {
 		contentPane.add(txtTinhtrang);
 		txtTinhtrang.setColumns(10);
 		
-		JButton btnCpNht = new JButton("C\u1EACP NH\u1EACT");
+		JButton btnCpNht = new JButton("UPDATE");
 		btnCpNht.setBackground(new Color(102, 153, 255));
 		btnCpNht.setForeground(new Color(255, 255, 255));
 		btnCpNht.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnCpNht.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tinhtrang=txtTinhtrang.getText();
-			    tinhtrangi = Integer.parseInt(tinhtrang);
-			    mayc=txtMayc.getText();
+				tinhtrangi = Integer.parseInt(tinhtrang);
+				
+			    mayc=txtMayc.getText().toUpperCase();
+			    
 				loadDataIntoJTable1();
+				//JOptionPane.showMessageDialog(frame, "Yêu cầu "+mayc+ " cập nhật thành công.");
+				
 			}
 		});
 		btnCpNht.setBounds(32, 219, 99, 35);
 		contentPane.add(btnCpNht);
 		
 		JButton btnBack = new JButton("BACK");
-		btnBack.setBackground(new Color(189, 183, 107));
+		btnBack.setBackground(new Color(255, 165, 0));
 		btnBack.setForeground(new Color(255, 255, 255));
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnBack.addActionListener(new ActionListener() {
@@ -138,6 +143,30 @@ public class yeucau extends JFrame {
 		});
 		btnBack.setBounds(643, 407, 89, 41);
 		contentPane.add(btnBack);
+		
+		JLabel lblTnhTrang = new JLabel("Tình trạng: ");
+		lblTnhTrang.setForeground(new Color(0, 0, 128));
+		lblTnhTrang.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblTnhTrang.setBounds(184, 333, 94, 25);
+		contentPane.add(lblTnhTrang);
+		
+		JLabel lbliu = new JLabel("0: đã điều xe");
+		lbliu.setForeground(new Color(0, 0, 128));
+		lbliu.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		lbliu.setBounds(288, 334, 89, 25);
+		contentPane.add(lbliu);
+		
+		JLabel lblXeang = new JLabel("1: xe đang trên đường đến ");
+		lblXeang.setForeground(new Color(0, 0, 128));
+		lblXeang.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		lblXeang.setBounds(288, 370, 188, 27);
+		contentPane.add(lblXeang);
+		
+		JLabel lbln = new JLabel("2: đã đến nơi");
+		lbln.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		lbln.setForeground(new Color(0, 0, 128));
+		lbln.setBounds(288, 407, 133, 33);
+		contentPane.add(lbln);
 		
 	}
 	
@@ -186,13 +215,9 @@ public class yeucau extends JFrame {
             row.add(rq.getKhachHang());
             row.add(rq.getNhanVien());
             modelyc.addRow(row);
+            
         }
 
 		table.setModel(modelyc);
     }
-
-	
-	
-	
-	
 }

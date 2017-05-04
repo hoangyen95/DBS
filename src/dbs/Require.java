@@ -49,21 +49,12 @@ public class Require {
 		this.nhanVien = nhanVien;
 	}
 	
-public static List<Require> updateRequire(String tinhtrang,int tinhtrangi, String mayc){
-	
-		
+	public static List<Require> updateRequire(String tinhtrang,int tinhtrangi, String mayc){	
 		try {
 			List<Require> list = new ArrayList<Require>();
-			//OracleDataSource source;
-			//source = new OracleDataSource();
-			//source.setURL("jdbc:oracle:thin:@localhost:1521/orcl");
-		    //Connection con = source.getConnection("Test", "test");
-		    //System.out.println("connect");
-			
+
 			Connection con = login.bridge();
-		    
-		    
-		    
+  
 		    String plSql = "{call HR.UPDATE_REQUIRE(?,?)}";
 		    CallableStatement cstmt = con.prepareCall(plSql);
 
@@ -86,13 +77,10 @@ public static List<Require> updateRequire(String tinhtrang,int tinhtrangi, Strin
 			cstmt0.executeQuery();
 			
 			ResultSet rs0 = (ResultSet)cstmt0.getObject(1);	
-				
-
-			    
+					    
 			    String kh = null;
 			    String nv=null;
-			    
-			    
+		    
 			    while (rs0.next()) {
 			    	
 			    	String makh = rs0.getString("MAKH");
@@ -104,27 +92,17 @@ public static List<Require> updateRequire(String tinhtrang,int tinhtrangi, Strin
 				    cstmt1.registerOutParameter(2, java.sql.Types.VARCHAR);
 				    cstmt1.execute();
 			    	
-			        //ResultSet resultSet1 = stmt1.executeQuery("select * from hr.khachhang where makh= '"+makh+"'");
-			        
-			        // get the participants
 			        kh = cstmt1.getString(2);
-
 			        String manv = rs0.getString("MANV");
 			        
 			        String plSql2 = "{call HR.GET_NAME_STAFF(?,?)}";
-				    cstmt2 = con.prepareCall(plSql2);
-				    
+				    cstmt2 = con.prepareCall(plSql2);	    
 				    cstmt2.setString(1, manv);
 				    cstmt2.registerOutParameter(2, java.sql.Types.VARCHAR);
 				    cstmt2.execute();
 
-			        //ResultSet resultSet2 = stmt2.executeQuery("select * from hr.nhanvien where manv= '"+manv+"'");
-			        
-			        // get the participants
 			        nv = cstmt2.getString(2);
-
-			        Require rq = new Require(rs0.getString("MAYC"), rs0.getString("TINHTRANG"), nv, kh);
-        	        
+			        Require rq = new Require(rs0.getString("MAYC"), rs0.getString("TINHTRANG"), nv, kh);       	        
 			        list.add(rq);
 			        
 			    }

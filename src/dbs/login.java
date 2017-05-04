@@ -112,13 +112,13 @@ public class login extends JFrame {
 					//con.close();
 				    }
 				    else{
-				    	JOptionPane.showMessageDialog(frame, "invalid username/password; logon denied");
+				    	JOptionPane.showMessageDialog(frame, "tên đăng nhập hoặc mật khẩu sai");
 				    }
 					
 				}
 				catch(Exception e1){
 					//System.out.println(e1);
-					JOptionPane.showMessageDialog(frame, "invalid username/password; logon denied");
+					JOptionPane.showMessageDialog(frame, "tên đăng nhập hoặc mật khẩu sai");
 				
 				}
 			}

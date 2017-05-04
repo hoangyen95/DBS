@@ -137,7 +137,7 @@ public class kienhang extends JFrame {
 				home.setVisible(true);
 			}
 		});
-		btnBack.setBackground(new Color(189, 183, 107));
+		btnBack.setBackground(new Color(255, 165, 0));
 		btnBack.setForeground(new Color(255, 255, 255));
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnBack.setBounds(860, 388, 89, 35);

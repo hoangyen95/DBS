@@ -12,6 +12,7 @@ import oracle.jdbc.pool.OracleDataSource;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -19,6 +20,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +38,15 @@ public class customer extends JFrame {
 	private JTextField textSearch;
 	private JTable table;
 	private String search;
+	private String convert;
 	private DefaultTableModel model;
+	private JTable table_1;
+	private JTextField txtStart;
+	private JTextField txtEnd;
+	private String start;
+	private String end;
+	private JFrame frame;
+	
 
 	/**
 	 * Launch the application.
@@ -91,7 +101,8 @@ public class customer extends JFrame {
 		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				search = textSearch.getText();				
+				search = textSearch.getText();
+				convert = search.toUpperCase();
 //				Connection con = login.bridge();
 //				
 //				try {
@@ -125,7 +136,7 @@ public class customer extends JFrame {
 
 		JButton btnBack = new JButton("BACK");
 		btnBack.setForeground(new Color(255, 255, 255));
-		btnBack.setBackground(new Color(189, 183, 107));
+		btnBack.setBackground(new Color(255, 165, 0));
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +151,77 @@ public class customer extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(230, 230, 250));
-		tabbedPane.addTab("New tab", null, panel_1, null);
+		tabbedPane.addTab("Doanh thu khách hàng", null, panel_1, null);
+		panel_1.setLayout(null);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(428, 64, 511, 149);
+		panel_1.add(scrollPane_1);
+		
+		table_1 = new JTable();
+		scrollPane_1.setViewportView(table_1);
+		
+		JButton btnBack_1 = new JButton("BACK");
+		btnBack_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnBack_1.setBackground(new Color(255, 165, 0));
+		btnBack_1.setForeground(new Color(255, 255, 255));
+		btnBack_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				home home  = new home();
+				home.setLocationRelativeTo(null);
+				home.setVisible(true);
+			}
+		});
+		btnBack_1.setBounds(850, 249, 89, 35);
+		panel_1.add(btnBack_1);
+		
+		JLabel lblNg = new JLabel("Ngày bắt đầu ");
+		lblNg.setForeground(new Color(0, 0, 139));
+		lblNg.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNg.setBounds(22, 64, 107, 33);
+		panel_1.add(lblNg);
+		
+		JLabel lblNgyKtThc = new JLabel("Ngày kết thúc ");
+		lblNgyKtThc.setForeground(new Color(0, 0, 139));
+		lblNgyKtThc.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNgyKtThc.setBounds(22, 129, 107, 33);
+		panel_1.add(lblNgyKtThc);
+		
+		JButton btnSearch_1 = new JButton("SEARCH");
+		btnSearch_1.setBackground(new Color(100, 149, 237));
+		btnSearch_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnSearch_1.setForeground(new Color(255, 255, 255));
+		btnSearch_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String regex = "(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-((19|20)\\d\\d)";
+				
+				start=txtStart.getText();
+				end=txtEnd.getText();
+				
+				boolean match1 = start.matches(regex);
+		    	boolean match2 = end.matches(regex);
+				
+		    	if(match1 && match2){
+		    		loadDataIntoJTable1();
+		    	}
+		    	else
+		    		JOptionPane.showMessageDialog(frame, "ngày theo định dạng dd-mm-yyyy");
+		    		
+			}
+		});
+		btnSearch_1.setBounds(22, 199, 89, 35);
+		panel_1.add(btnSearch_1);
+		
+		txtStart = new JTextField();
+		txtStart.setBounds(162, 71, 140, 20);
+		panel_1.add(txtStart);
+		txtStart.setColumns(10);
+		
+		txtEnd = new JTextField();
+		txtEnd.setBounds(162, 135, 140, 20);
+		panel_1.add(txtEnd);
+		txtEnd.setColumns(10);
 	}
 	
 	 public void loadDataIntoJTable(){
@@ -155,8 +236,9 @@ public class customer extends JFrame {
 	        column.add("CTY ĐẠI DIỆN");
 	        column.add("CÔNG NỢ");
 	        model.setColumnIdentifiers(column);
-	        List<Customers> list = Customers.getCustomersFromDB(search);
-	        System.out.print(list.size());
+	        
+	        List<Customers> list = Customers.getCustomersFromDB(convert);
+	        //System.out.print(list.size());
 	        for (int i = 0; i < list.size(); i++) {
 	            Customers cs = (Customers)list.get(i);
 	            Vector row = new Vector();
@@ -172,7 +254,26 @@ public class customer extends JFrame {
 
 			table.setModel(model);
 	    }
-	
-	
-	
+	 
+	 public void loadDataIntoJTable1(){
+	        model = new DefaultTableModel();
+	        //Set Column Title
+	        Vector column = new Vector();
+	        column.add("HỌ TÊN");
+	        column.add("DOANH THU");
+	        
+	        model.setColumnIdentifiers(column);
+	        
+	        List<Customers> list = Customers.getCustomerFromDB1(start,end);
+	        //System.out.print(list.size());
+	        for (int i = 0; i < list.size(); i++) {
+	            Customers cs = (Customers)list.get(i);
+	            Vector row = new Vector();
+	            row.add(cs.getHoTen());
+	            row.add(cs.getDoanhThu());
+	            model.addRow(row);
+	        }
+
+	        table_1.setModel(model);
+	    }
 }

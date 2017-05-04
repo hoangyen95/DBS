@@ -97,7 +97,7 @@ public class home extends JFrame {
 		btnExit.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame, "ban co chac muon thoat khoi he thong khong");
+				JOptionPane.showMessageDialog(frame, "bạn có muốn thoát khỏi hệ thống?");
 				setVisible(false);
 				login login  = new login();
 				login.setLocationRelativeTo(null);
