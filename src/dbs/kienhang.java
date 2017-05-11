@@ -12,9 +12,11 @@ import oracle.jdbc.pool.OracleDataSource;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
@@ -33,7 +35,7 @@ public class kienhang extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel modelkih;
-
+	private JFrame frame;
 	/**
 	 * Launch the application.
 	 */
@@ -88,6 +90,12 @@ public class kienhang extends JFrame {
 		btnNH.setBounds(554, 62, 160, 23);
 		contentPane.add(btnNH);
 		
+		ButtonGroup bg1 = new ButtonGroup( );
+		 
+		bg1.add(btnGH);
+		bg1.add(btnNH);
+		
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 99, 919, 263);
 		contentPane.add(scrollPane);
@@ -108,18 +116,16 @@ public class kienhang extends JFrame {
 					
 					
 					//theo khach hang gui
-					if(btnGH.isSelected()){
-						
-						loadDataKHGUI();
-						
+					if(btnGH.isSelected()){					
+						loadDataKHGUI();				
 					}
 					//theo khach hang nhan
-					else if(btnNH.isSelected()){
-						loadDataKHNHAN();
+					else if(btnNH.isSelected()){		
+						loadDataKHNHAN();		
 					}
 					//mac dinh ca 2 truong hop
 					else{
-						
+						JOptionPane.showMessageDialog(frame, "vui lòng chọn lựa chọn");
 					}
 				
 			}

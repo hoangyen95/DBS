@@ -103,23 +103,7 @@ public class customer extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				search = textSearch.getText();
 				convert = search.toUpperCase();
-//				Connection con = login.bridge();
-//				
-//				try {
-//					Statement stmt;
-//					stmt = con.createStatement();
-//					ResultSet rset = stmt.executeQuery("select * from HR.EMPLOYEE WHERE LNAME like '%" + search +"%'");
-//				    //table.setModel(DbUtils.resultSetToTableModel(rset));
-////				    while (rset.next())
-////				      System.out.println(rset.getString(3));
-////				    rset.close();
-////				    stmt.close();
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				
-				
+		
 				 loadDataIntoJTable();
 				 System.out.println("success");
 			}

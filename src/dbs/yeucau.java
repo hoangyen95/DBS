@@ -118,10 +118,15 @@ public class yeucau extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				tinhtrang=txtTinhtrang.getText();
 				tinhtrangi = Integer.parseInt(tinhtrang);
-				
+				String regex = "(0|1|2)";
 			    mayc=txtMayc.getText().toUpperCase();
-			    
-				loadDataIntoJTable1();
+			    boolean match1 = tinhtrang.matches(regex);
+				
+				if(match1){
+					loadDataIntoJTable1();
+		    	}
+		    	else
+		    		JOptionPane.showMessageDialog(frame, "tình trạng yêu cầu là 0,1 hoặc 2");
 				//JOptionPane.showMessageDialog(frame, "Yêu cầu "+mayc+ " cập nhật thành công.");
 				
 			}
